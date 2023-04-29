@@ -1,6 +1,6 @@
 #' Random Samples and Permutations
 #'
-#' @inheritParams stringr::str_split
+#' @inheritParams base::sample
 #'
 #' @return A list of outcomes
 #' @export

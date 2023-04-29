@@ -10,6 +10,7 @@ test_that("take.one.sample has the correct structure and length", {
 
 
 test_that("sample without replacement and default size returns whole x", {
+  x <- c('H', 'T')
   expect_length(take.one.sample(x), 1)
   expect_length(take.one.sample(x)[[1]], 2)
 })
