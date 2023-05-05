@@ -16,7 +16,7 @@
 #' coin <- c('H', 'T')
 #' init_trials(10) %>% mutate(.outcome = map(.trial, \(i) sample(coin, 5, replace = TRUE)))
 init_trials <- function(n) {
-  tidyr::tibble(.trial = 1:n)
+  tidyr::tibble(.trial = seq(1, n, 1))
 }
 
 
@@ -38,7 +38,7 @@ init_trials <- function(n) {
 add_trials <-
   function(df, n) {
     (df
-     %>% dplyr::mutate(.trial = purrr::map(row.names(df), ~1:n))
+     %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, n, 1)))
      %>% tidyr::unnest_longer(.trial)
     )
   }
