@@ -58,6 +58,7 @@ The \code{col_map} functions transform an input column by applying a function to
 \examples{
 library(dplyr)
 library(tidyr)
+library(purrr)
 
 df <-
    tribble( ~coin, ~.trial,
@@ -68,27 +69,22 @@ df \%>\% glimpse
 
 # By default, each map updates the `.outcome` column
 
-out <- df \%>\%
-  col_map(sample, size = 3, replace = TRUE,     # additional args follow function
+is.head <- function(x) x == 'H'
+
+out1 <- df \%>\%
+  col_map(sample, size = 3, replace = TRUE,     # additional constant args follow function
           onto = coin) \%>\%                      # stored as default (.output)
   col_map(\(x) keep(x, is.head)) \%>\%            # updates default (.output)
   col_map_int(length)                           # updates default (.output)
-out \%>\% glimpse
+out1 \%>\% glimpse
 
+# Use `onto` and `as` to specify new output columns
 
-# Use the `onto` to specify a target other than `.outcome`
-# and `as` to specify a new destination.
-is.first.equal.second <- function(x) x[[1]] == x[[2]]
+is.head <- function(x) x == 'H'
 
-out <- df \%>\%
-  col_map(sample, size = 3, replace = TRUE,
-          onto = coin,
-          as = coin.tosses,            # Stored as `coin.toss`
-          ) \%>\%
-  col_map_lgl(is.first.equal.second,
-              onto = coin.tosses,      # pick the target column
-              as = first_equal_second, # Stored in new column
-              )
-out \%>\% glimpse
-View(out)
+df \%>\%
+  col_map(\(x) sample(x, 3, TRUE), onto = coin, as=toss) \%>\%
+  col_map(\(x) keep(x, is.head), onto = toss, as = just.head) \%>\%
+  col_map_int(length, onto=just.head, as=num.heads) -> out2
+out2 \%>\% glimpse
 }

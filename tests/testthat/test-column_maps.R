@@ -1,16 +1,16 @@
 test_case_default <- function(functor, f) {
-  base <- tibble(.trial = sapply(1:5, list))
+  base <- tidyr::tibble(.trial = sapply(1:5, list))
   actual <- base %>% functor(f, onto = .trial)
-  expect <- tibble(.trial = sapply(1:5, list),
+  expect <- tidyr::tibble(.trial = sapply(1:5, list),
                    .outcome = sapply(1:5, f),
                   )
   all.equal.list(actual, expect)
 }
 
 test_case_new_name <- function(functor, f) {
-  base <- tibble(.trial = sapply(1:5, list))
+  base <- tidyr::tibble(.trial = sapply(1:5, list))
   actual <- base %>% functor(f, onto = .trial, as=out)
-  expect <- tibble(.trial = sapply(1:5, list),
+  expect <- tidyr::tibble(.trial = sapply(1:5, list),
                    out = sapply(1:5, f),
                   )
   all.equal.list(actual, expect)
@@ -48,7 +48,7 @@ test_that("col_map_chr works with default as=.outcome", {
 
 test_that("col_map_vec works with default as=.outcome", {
   f <- \(i) as.Date("01-01-01")
-  base <- tibble(.trial = sapply(1:5, list))
+  base <- tidyr::tibble(.trial = sapply(1:5, list))
   actual <- base %>% col_map_vec(f, onto = .trial)
   expect <-
     base %>%
