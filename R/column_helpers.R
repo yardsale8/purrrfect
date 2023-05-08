@@ -27,5 +27,5 @@ col_num_successes <- function(df, col, .p, name = .successes) {
   col <- dplyr::enquo(col)
 
   (df
-    %>% dplyr::mutate(!!name := num_successes(!!col, .p)))
+    %>% dplyr::mutate(!!name := num_successes_int(!!col, .p)))
 }
