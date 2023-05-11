@@ -72,7 +72,7 @@ num_successes <-
     } else {
       function(x) x == .p
     }
-    length(purrr::keep(outcome, f))
+    sum(f(outcome))
   }
 #' @rdname num_successes
 #' @export
