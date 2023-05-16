@@ -4,15 +4,15 @@
 \alias{add_trials}
 \title{Title}
 \usage{
-add_trials(df, n)
+add_trials(df, .n)
 }
 \arguments{
 \item{df}{A \code{data.frame}/\code{tibble} containing the experiment's parameters.}
 
-\item{n}{The number of trials.}
+\item{.n}{The number of trials.}
 }
 \value{
-A \code{tibble} with the parameter space replicated \code{n} times and a \code{.trial=1:n} column.
+A \code{tibble} with the parameter space replicated \code{.n} times and a \code{.trial=1:.n} column.
 }
 \description{
 Title

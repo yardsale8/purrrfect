@@ -23,9 +23,9 @@ init_trials <- function(n) {
 #' Title
 #'
 #' @param df A `data.frame`/`tibble` containing the experiment's parameters.
-#' @param n  The number of trials.
+#' @param .n  The number of trials.
 #'
-#' @return A `tibble` with the parameter space replicated `n` times and a `.trial=1:n` column.
+#' @return A `tibble` with the parameter space replicated `.n` times and a `.trial=1:.n` column.
 #' @export
 #'
 #' @examples
@@ -36,9 +36,9 @@ init_trials <- function(n) {
 #'   ) %>%
 #'   add_trials(10)
 add_trials <-
-  function(df, n) {
+  function(df, .n) {
     (df
-     %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, n, 1)))
+     %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, .n, 1)))
      %>% tidyr::unnest_longer(.trial)
     )
   }
