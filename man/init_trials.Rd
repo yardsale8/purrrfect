@@ -4,16 +4,16 @@
 \alias{init_trials}
 \title{Initial a Probability Tableau}
 \usage{
-init_trials(n)
+init_trials(.n)
 }
 \arguments{
-\item{n}{The number of trials.}
+\item{.n}{The number of trials.}
 }
 \value{
-A \code{tibble} with \code{n} rows and a \code{.trial = 1:n} column.
+A \code{tibble} with \code{.n} rows and a \code{.trial = 1:.n} column.
 }
 \description{
-Creates a \code{tibble} with \code{n} rows and a \code{.trial = 1:n} column
+Creates a \code{tibble} with \code{.n} rows and a \code{.trial = 1:.n} column
 }
 \examples{
 library(dplyr)
