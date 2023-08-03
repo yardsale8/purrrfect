@@ -59,7 +59,7 @@ sample_until_no_replace <-
 #' @param .p Either an atomic element or a Boolean predicate function.
 #' @param replace Whether to sample with replacement.
 #' @param prob a vector of weigths for obtaining the element of `x`
-#' @param halt an integer limiting the length of the output.  Will be set to `length(x)` when `replace=FALSE`
+#' @param .halt an integer limiting the length of the output.  Will be set to `length(x)` when `replace=FALSE`
 #'
 #' @return The smallest sample that either (A) matches `.p` when `.p` is atomic, (B) satisfies the predicate `.p`, (C) has reached the halting length.
 #' @export
@@ -79,7 +79,7 @@ sample_until_no_replace <-
 #' # Flipping a biased coin
 #' coin <- c('H', 'T')
 #' prob <- c(0.6, 0.4)
-#' sample_until(coin, 'H', replace = FALSE, prob=prob)
+#' sample_until(coin, 'H', replace = TRUE, prob=prob)
 #' first.head <- replicate(5, sample_until(coin, 'H', replace = TRUE, prob=prob))
 #' first.head %>% glimpse
 #' three.heads <- \(x) num_successes(x, 'H') == 3
@@ -95,16 +95,51 @@ sample_until_no_replace <-
 #' first.blue <- replicate(5, sample_until(urn, 'Blue', replace=FALSE))
 #' first.blue %>% glimpse
 #'
-#' second.blue <- replicate(5, sample_until(urn, \(x) num_successes(x, 'Blue') == 2, replace=FALSE))
+#' two.blue <- \(x) num_successes(x, 'Blue') == 2
+#' second.blue <- replicate(5, sample_until(urn, two.blue, replace=FALSE))
 #' second.blue %>% glimpse
 sample_until <-
-  function(x, .p, replace = FALSE, prob = NULL, halt = 1000) {
+  function(x, .p, replace = FALSE, prob = NULL, .halt = 1000) {
     if (replace) {
-      return(sample_until_replace(x, .p, prob, halt))
+      return(sample_until_replace(x, .p, prob, .halt))
 
     } else {
       return(sample_until_no_replace(x, .p, prob))
     }
   }
 
+#' Sample from a List Column
+#'
+#' Take a sample from a list column `.col` from the tibble `.df`
+#'
+#' @param .df A tibble containing the sample space in a column and one row per trial.
+#' @param .col The list column to be sampled.
+#' @param size a non-negative integer giving the number of items to choose.
+#' @param prob a vector of probability weights for obtaining the elements of the vector being sampled.
+#' @param replace should sampling be with replacement?
+#' @param .as the name of the resulting outcome column (default = .outcome)
+#'
+#' @return An updated tibble containing the outcomes in a list column
+#' @export
+#'
+#' @examples
+#' library(dplyr)
+#'
+#' # Flip a fair coin 3 times (10 trials)
+#' tribble(~coin,
+#'         c('H', 'T')) %>%
+#'   add_trials(10) %>%
+#'   col_sample(coin, 3, replace = TRUE)
+#'
+#' # Same experiment, but rename the outcome column
+#' tribble(~coin,
+#'         c('H', 'T')) %>%
+#'    add_trials(10) %>%
+#'    col_sample(coin, 3, replace = TRUE, .as = three.tosses)
+col_sample <-
+  function(.df, .col, size, prob = NULL, replace = FALSE, .as = .outcome) {
+    ( .df
+      %>% dplyr::mutate("{{.as}}":= purrr::map({{.col}}, \(x) sample(x, size, prob = prob, replace = replace )))
+    )
+}
 

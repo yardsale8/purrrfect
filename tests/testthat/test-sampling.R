@@ -42,3 +42,44 @@ test_that("sample until without replacement and predicate works", {
   expect_true(all(num_successes(actual, 'B') == 2))
   expect_true(all(length(x) >= length(actual)))
 })
+
+test_that("col_sample with n=N and replace=FALSE returns a permutation", {
+  (tribble(~coin,
+           c('H', 'T'),
+  )
+  %>% add_trials(10)
+  %>% col_sample(coin, 2)
+  %>% col_num_successes(.outcome, 'H', name = num_heads)
+  %>% col_num_successes(.outcome, 'T', name = num_tails)
+  %>% mutate(one_of_each = num_heads == 1 & num_tails == 1)
+  ) -> output_df
+  expect_true(all(output_df$one_of_each))
+})
+
+
+
+test_that("col_sample with n=5 and replace=True returns the correct(ish) output", {
+  (tribble(~coin,
+           c('H', 'T'),
+  )
+  %>% add_trials(10)
+  %>% col_sample(coin, 5, replace = TRUE)
+  %>% col_num_successes(.outcome, 'H', name = num_heads)
+  %>% col_num_successes(.outcome, 'T', name = num_tails)
+  %>% mutate(total_is_five = (num_heads + num_tails) == 5)
+  ) -> output_df
+  expect_true(all(output_df$total_is_five))
+})
+
+test_that("col_sample with n=5, replace=FALSE, and prob = c(1, 0) returns all heads", {
+  (tribble(~coin,
+           c('H', 'T'),
+  )
+  %>% add_trials(10)
+  %>% col_sample(coin, 5, replace = TRUE, prob = c(1, 0))
+  %>% col_num_successes(.outcome, 'H', name = num_heads)
+  %>% col_num_successes(.outcome, 'T', name = num_tails)
+  %>% mutate(all_heads = num_heads == 5)
+  ) -> output_df
+  expect_true(all(output_df$all_heads))
+})
