@@ -1,10 +1,10 @@
 #' Initial a Probability Tableau
 #'
-#' Creates a `tibble` with `n` rows and a `.trial = 1:n` column
+#' Creates a `tibble` with `.n` rows and a `.trial = 1:.n` column
 #'
-#' @param n The number of trials.
+#' @param .n The number of trials.
 #'
-#' @return A `tibble` with `n` rows and a `.trial = 1:n` column.
+#' @return A `tibble` with `.n` rows and a `.trial = 1:.n` column.
 #' @export
 #'
 #' @examples
@@ -15,8 +15,8 @@
 #'
 #' coin <- c('H', 'T')
 #' init_trials(10) %>% mutate(.outcome = map(.trial, \(i) sample(coin, 5, replace = TRUE)))
-init_trials <- function(n) {
-  tidyr::tibble(.trial = seq(1, n, 1))
+init_trials <- function(.n) {
+  tidyr::tibble(.trial = seq(1, .n, 1))
 }
 
 
