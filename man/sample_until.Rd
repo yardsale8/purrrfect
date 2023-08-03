@@ -38,7 +38,7 @@ third.head \%>\% glimpse
 # Flipping a biased coin
 coin <- c('H', 'T')
 prob <- c(0.6, 0.4)
-sample_until(coin, 'H', replace = FALSE, prob=prob)
+sample_until(coin, 'H', replace = TRUE, prob=prob)
 first.head <- replicate(5, sample_until(coin, 'H', replace = TRUE, prob=prob))
 first.head \%>\% glimpse
 three.heads <- \(x) num_successes(x, 'H') == 3
@@ -54,6 +54,7 @@ sample_until(urn, 'Blue', replace=FALSE)
 first.blue <- replicate(5, sample_until(urn, 'Blue', replace=FALSE))
 first.blue \%>\% glimpse
 
-second.blue <- replicate(5, sample_until(urn, \(x) num_successes(x, 'Blue') == 2, replace=FALSE))
+two.blue <- \(x) num_successes(x, 'Blue') == 2
+second.blue <- replicate(5, sample_until(urn, two.blue, replace=FALSE))
 second.blue \%>\% glimpse
 }
