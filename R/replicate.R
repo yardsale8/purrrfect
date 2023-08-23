@@ -44,11 +44,19 @@
 #' out <- replicate_vec(10, as.Date("01-01-01"))
 #' str(out)
 #' glimpse(out)
-replicate <- function(n, expr) {
+replicate <- function(n,
+                      expr,
+                      .reshape = NULL,
+                      names_sep = '.',
+                      transform = NULL
+                      ) {
   f <- eval.parent(substitute(function(...) expr))
   (
     init_trials(n)
     %>% dplyr::mutate(.outcome = purrr::map(.trial, \(i) f()))
+    %>% reshape_and_transform(.reshape = .reshape,
+                              names_sep = names_sep,
+                              transform = transform)
   )
 }
 #' @rdname replicate

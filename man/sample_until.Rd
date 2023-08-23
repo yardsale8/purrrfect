@@ -4,7 +4,7 @@
 \alias{sample_until}
 \title{Sample until a given condition}
 \usage{
-sample_until(x, .p, replace = FALSE, prob = NULL, halt = 1000)
+sample_until(x, .p, replace = FALSE, prob = NULL, .halt = 1000)
 }
 \arguments{
 \item{x}{Either a vector of one more more elements, or a positive integer.}
@@ -15,7 +15,7 @@ sample_until(x, .p, replace = FALSE, prob = NULL, halt = 1000)
 
 \item{prob}{a vector of weigths for obtaining the element of \code{x}}
 
-\item{halt}{an integer limiting the length of the output.  Will be set to \code{length(x)} when \code{replace=FALSE}}
+\item{.halt}{an integer limiting the length of the output.  Will be set to \code{length(x)} when \code{replace=FALSE}}
 }
 \value{
 The smallest sample that either (A) matches \code{.p} when \code{.p} is atomic, (B) satisfies the predicate \code{.p}, (C) has reached the halting length.

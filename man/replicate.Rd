@@ -9,7 +9,7 @@
 \alias{replicate_vec}
 \title{A Better \code{replicate}}
 \usage{
-replicate(n, expr)
+replicate(n, expr, .reshape = NULL, names_sep = ".", transform = NULL)
 
 replicate_lgl(n, expr)
 
