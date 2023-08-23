@@ -1,6 +1,6 @@
 Package: purrrfect
 Title: Functional Probability Simulations
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Todd", "Iverson", , "tiverson@winona.edu", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
