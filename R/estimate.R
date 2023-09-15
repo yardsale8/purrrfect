@@ -36,11 +36,11 @@
 #'   group_by(first.toss) %>%
 #'   tabulate(second.toss, prefix = "second.toss=")
 tabulate <- function(df, col, prefix = 'X = ') {
-  myenc <- dplyr::enquo(col)
+  # myenc <- dplyr::enquo(col)
   (df
-    %>% dplyr::mutate(.unique_row_id = 1:dplyr::n())
+    %>% dplyr::mutate(.unique_row_id = dplyr::row_number())
     %>% dplyr::mutate(dummy = 1)
-    %>% dplyr::mutate(labels := paste0(prefix, !!myenc))
+    %>% dplyr::mutate(labels := paste0(prefix, {{col}}))
     %>% dplyr::select(.unique_row_id, labels, dummy)
     %>% tidyr::spread(labels, dummy, fill = 0)
     %>% dplyr::select(-.unique_row_id)
