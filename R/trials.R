@@ -36,9 +36,14 @@ init_trials <- function(.n) {
 #'   ) %>%
 #'   add_trials(10)
 add_trials <-
-  function(df, .n) {
+  function(df, .n, group = TRUE) {
     (df
      %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, .n, 1)))
      %>% tidyr::unnest_longer(.trial)
-    )
+    ) -> data_out
+    if (group) {
+      return(data_out %>% dplyr::group_by(dplyr::pick(-.trial)))
+    } else {
+        return(data_out)
+    }
   }

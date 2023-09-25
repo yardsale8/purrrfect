@@ -4,7 +4,7 @@
 \alias{parameters}
 \title{Row-wise parameter space creation}
 \usage{
-parameters(...)
+parameters(..., group_by = TRUE)
 }
 \arguments{
 \item{...}{Arguments specifying the structure of a tibble.
