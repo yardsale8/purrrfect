@@ -4,12 +4,15 @@
 \alias{add_trials}
 \title{Title}
 \usage{
-add_trials(df, .n, group = TRUE)
+add_trials(df, .n, .group = TRUE)
 }
 \arguments{
 \item{df}{A \code{data.frame}/\code{tibble} containing the experiment's parameters.}
 
 \item{.n}{The number of trials.}
+
+\item{.group}{Whether to \code{group_by} the incoming parameters or all other columns.
+(default = TRUE).}
 }
 \value{
 A \code{tibble} with the parameter space replicated \code{.n} times and a \code{.trial=1:.n} column.

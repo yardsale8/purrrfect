@@ -24,6 +24,8 @@ init_trials <- function(.n) {
 #'
 #' @param df A `data.frame`/`tibble` containing the experiment's parameters.
 #' @param .n  The number of trials.
+#' @param .group  Whether to `group_by` the incoming parameters or all other columns.
+#'  (default = TRUE).
 #'
 #' @return A `tibble` with the parameter space replicated `.n` times and a `.trial=1:.n` column.
 #' @export
@@ -36,12 +38,12 @@ init_trials <- function(.n) {
 #'   ) %>%
 #'   add_trials(10)
 add_trials <-
-  function(df, .n, group = TRUE) {
+  function(df, .n, .group = TRUE) {
     (df
      %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, .n, 1)))
      %>% tidyr::unnest_longer(.trial)
     ) -> data_out
-    if (group) {
+    if (.group) {
       return(data_out %>% dplyr::group_by(dplyr::pick(-.trial)))
     } else {
         return(data_out)
