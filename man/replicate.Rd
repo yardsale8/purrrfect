@@ -7,19 +7,44 @@
 \alias{replicate_dbl}
 \alias{replicate_chr}
 \alias{replicate_vec}
+\alias{replicate2}
+\alias{replicate2_lgl}
+\alias{replicate2_int}
+\alias{replicate2_dbl}
+\alias{replicate2_chr}
+\alias{replicate2_vec}
 \title{A Better \code{replicate}}
 \usage{
-replicate(n, expr, .reshape = NULL, names_sep = ".", transform = NULL)
+replicate(
+  n,
+  expr,
+  .reshape = NULL,
+  names_sep = ".",
+  transform = NULL,
+  .as = .outcome
+)
 
-replicate_lgl(n, expr)
+replicate_lgl(n, expr, .as = .outcome)
 
-replicate_int(n, expr)
+replicate_int(n, expr, .as = .outcome)
 
-replicate_dbl(n, expr)
+replicate_dbl(n, expr, .as = .outcome)
 
-replicate_chr(n, expr)
+replicate_chr(n, expr, .as = .outcome)
 
-replicate_vec(n, expr)
+replicate_vec(n, expr, .as = .outcome)
+
+replicate2(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
+
+replicate2_lgl(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
+
+replicate2_int(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
+
+replicate2_dbl(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
+
+replicate2_chr(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
+
+replicate2_vec(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2)
 }
 \arguments{
 \item{n}{The number of replications.}
