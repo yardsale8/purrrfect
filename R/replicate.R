@@ -130,8 +130,8 @@ replicate2_lgl <- function(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2) 
   f2 <- eval.parent(substitute(function(...) expr2))
   (
     init_trials(n)
-    %>% dplyr::mutate('{{.as1}}' := purrr::map(.trial, \(i) f1()))
-    %>% dplyr::mutate('{{.as2}}' := purrr::map(.trial, \(i) f2()))
+    %>% dplyr::mutate('{{.as1}}' := purrr::map_lgl(.trial, \(i) f1()))
+    %>% dplyr::mutate('{{.as2}}' := purrr::map_lgl(.trial, \(i) f2()))
   )
 }
 #' @rdname replicate
@@ -141,8 +141,8 @@ replicate2_int <- function(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2) 
   f2 <- eval.parent(substitute(function(...) expr2))
   (
     init_trials(n)
-    %>% dplyr::mutate('{{.as1}}' := purrr::map(.trial, \(i) f1()))
-    %>% dplyr::mutate('{{.as2}}' := purrr::map(.trial, \(i) f2()))
+    %>% dplyr::mutate('{{.as1}}' := purrr::map_int(.trial, \(i) f1()))
+    %>% dplyr::mutate('{{.as2}}' := purrr::map_int(.trial, \(i) f2()))
   )
 }
 #' @rdname replicate
@@ -153,8 +153,8 @@ replicate2_dbl <- function(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2) 
   f2 <- eval.parent(substitute(function(...) expr2))
   (
     init_trials(n)
-    %>% dplyr::mutate('{{.as1}}' := purrr::map(.trial, \(i) f1()))
-    %>% dplyr::mutate('{{.as2}}' := purrr::map(.trial, \(i) f2()))
+    %>% dplyr::mutate('{{.as1}}' := purrr::map_dbl(.trial, \(i) f1()))
+    %>% dplyr::mutate('{{.as2}}' := purrr::map_dbl(.trial, \(i) f2()))
   )
 }
 #' @rdname replicate
@@ -164,8 +164,8 @@ replicate2_chr <- function(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2) 
   f2 <- eval.parent(substitute(function(...) expr2))
   (
     init_trials(n)
-    %>% dplyr::mutate('{{.as1}}' := purrr::map(.trial, \(i) f1()))
-    %>% dplyr::mutate('{{.as2}}' := purrr::map(.trial, \(i) f2()))
+    %>% dplyr::mutate('{{.as1}}' := purrr::map_chr(.trial, \(i) f1()))
+    %>% dplyr::mutate('{{.as2}}' := purrr::map_chr(.trial, \(i) f2()))
   )
 }
 #' @rdname replicate
@@ -175,7 +175,7 @@ replicate2_vec <- function(n, expr1, expr2, .as1 = .outcome1, .as2 = .outcome2) 
   f2 <- eval.parent(substitute(function(...) expr2))
   (
     init_trials(n)
-    %>% dplyr::mutate('{{.as1}}' := purrr::map(.trial, \(i) f1()))
-    %>% dplyr::mutate('{{.as2}}' := purrr::map(.trial, \(i) f2()))
+    %>% dplyr::mutate('{{.as1}}' := purrr::map_vec(.trial, \(i) f1()))
+    %>% dplyr::mutate('{{.as2}}' := purrr::map_vec(.trial, \(i) f2()))
   )
 }
