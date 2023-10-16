@@ -67,7 +67,7 @@ replicate_lgl <- function(n, expr,.as = .outcome) {
   f <- eval.parent(substitute(function(...) expr))
   (
     init_trials(n)
-    %>% dplyr::mutate(.outcome = purrr::map_lgl(.trial, \(i) f()))
+    %>% dplyr::mutate('{{.as}}' := purrr::map_lgl(.trial, \(i) f()))
   )
 }
 #' @rdname replicate
@@ -76,7 +76,7 @@ replicate_int <- function(n, expr,.as = .outcome) {
   f <- eval.parent(substitute(function(...) expr))
   (
     init_trials(n)
-    %>% dplyr::mutate(.outcome = purrr::map_int(.trial, \(i) f()))
+    %>% dplyr::mutate('{{.as}}' := purrr::map_int(.trial, \(i) f()))
   )
 }
 #' @rdname replicate
