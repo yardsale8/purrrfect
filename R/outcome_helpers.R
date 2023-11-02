@@ -88,3 +88,55 @@ num_successes_int <-
       %>% purrr::map_int(\(x) num_successes(x, f))
     )
   }
+
+#' Counting Labels
+#'
+#' Counts the number of occurrences of a given label in a list column of
+#' of character vectors, storing the result in a new column named "num_{.label}".
+#' This method was designed for counting the outcomes in a multinomial setting.
+#'
+#' @param .data A data frame/tibble.
+#' @param .col A list column of character variables.
+#' @param .label The label being counted.
+#'
+#' @seealso [multicounts()]
+#'
+#' @return The original .data with a new count column
+#' @export
+#'
+#' @examples
+#' grades <- c('A', 'B', 'C', 'D', 'F')
+#' probs <- c(0.23, 0.26, 0.21, 0.18, 0.12)
+#' n <- 5
+#'
+#' replicate(5, sample(grades, n, prob = probs, replace = TRUE), .as = raw.grades) %>%
+#'   get_label_count(raw.grades, 'A')
+get_label_count <- function(.data, .col, .label) {
+  .data %>% dplyr::mutate("num_{.label}" := num_successes_int({{.col}}, .label))}
+#' Count Multiple Labels
+#'
+#' Counts the number of occurrences of a given collection of labels in a list column of
+#' of character vectors, storing the result in a new columns named "num_{label}".
+#' This method was designed for counting the outcomes in a multinomial setting.
+#'
+#' @param .data A data frame/tibble.
+#' @param .col A list column of character variables.
+#' @param .labels A vector of labels to be counted.
+#'
+#' @seealso [get_label_count()]
+#'
+#' @return The original .data with a new count columns, one for each entry in .labels
+#' @export
+#'
+#'
+#' @examples
+#' grades <- c('A', 'B', 'C', 'D', 'F')
+#' probs <- c(0.23, 0.26, 0.21, 0.18, 0.12)
+#' n <- 5
+#'
+#' replicate(5, sample(grades, n, prob = probs, replace = TRUE), .as = raw.grades) %>%
+#'   multicounts(raw.grades, grades)
+multicounts <-
+  function(.data, .col, .labels) {
+    purrr::reduce(.labels, \(df, el) get_label_count(df, {{.col}}, el), .init = .data)
+  }
