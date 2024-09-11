@@ -4,7 +4,7 @@
 \alias{add_trials}
 \title{Title}
 \usage{
-add_trials(df, .n, .group = TRUE)
+add_trials(df, .n, .group = FALSE)
 }
 \arguments{
 \item{df}{A \code{data.frame}/\code{tibble} containing the experiment's parameters.}
