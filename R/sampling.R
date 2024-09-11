@@ -141,5 +141,48 @@ col_sample <-
     ( .df
       %>% dplyr::mutate("{{.as}}":= purrr::map({{.col}}, \(x) sample(x, size, prob = prob, replace = replace )))
     )
-}
+  }
+
+#' Random Samples of a Dataframe
+#'
+#' `sample_table` samples the rows of `.df` returning the resulting data frame
+#'
+#' @param .df A `data.frame`/`tibble`
+#' @param size A positive number representing the number of rows to be sampled.
+#' @param replace should sampling be with replacement?
+#' @param prob a vector of probability weights for obtaining the elements of the vector being sampled.  Can either be a column of weights contained in `.df.` or a separate vector with a length of `nrow(.df)`
+#'
+#' @return A `data.frame`/`tibble`
+#' @export
+#'
+#' @examples
+#' library(purrr)
+#'
+#' biased_coin <- data.frame(toss = c(rep('H', 55), rep('T', 45)))
+#'
+#' sample_table(biased_coin, 5, replace = TRUE)
+#'
+#' map(1:10, \(i) sample_table(biased_coin, 5, replace = TRUE))
+#'
+#'
+#' urn <- data.frame(draw = c(rep('R', 4), rep('W', 3)))
+#' urn
+#'
+#' sample_table(urn, 3, replace = FALSE)
+#'
+#' coin <- data.frame(toss = c('H', 'T'))
+#' ps <- c(0.55, 0.45)
+#' sample_table(coin, 3, replace = TRUE, prob = ps)
+#'
+#' coin_w_weights <- data.frame(toss = c('H', 'T'), weight = c(0.55, 0.45))
+#' coin_w_weights
+#'
+#' sample_table(coin_w_weights, 3, replace = TRUE, prob = weight)
+sample_table <-
+  function(.df, size, replace = FALSE, prob = NULL) {
+    prob <- dplyr::enquo(prob)
+    sample_index_quo = dplyr::quo(sample(1:nrow(.df), size, replace = replace, prob = !!prob))
+    sample_index = rlang::eval_tidy(sample_index_quo, .df)
+    return(.df[sample_index, ])
+  }
 
