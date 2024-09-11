@@ -38,7 +38,7 @@ init_trials <- function(.n) {
 #'   ) %>%
 #'   add_trials(10)
 add_trials <-
-  function(df, .n, .group = TRUE) {
+  function(df, .n, .group = FALSE) {
     (df
      %>% dplyr::mutate(.trial = purrr::map(row.names(df), \(x) seq(1, .n, 1)))
      %>% tidyr::unnest_longer(.trial)
