@@ -20,12 +20,12 @@ init_trials <- function(.n) {
 }
 
 
-#' Title
+#' Add trials
 #'
 #' @param df A `data.frame`/`tibble` containing the experiment's parameters.
 #' @param .n  The number of trials.
 #' @param .group  Whether to `group_by` the incoming parameters or all other columns.
-#'  (default = TRUE).
+#'  (default = FALSE).
 #'
 #' @return A `tibble` with the parameter space replicated `.n` times and a `.trial=1:.n` column.
 #' @export

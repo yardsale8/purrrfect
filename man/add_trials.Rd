@@ -2,7 +2,7 @@
 % Please edit documentation in R/trials.R
 \name{add_trials}
 \alias{add_trials}
-\title{Title}
+\title{Add trials}
 \usage{
 add_trials(df, .n, .group = FALSE)
 }
@@ -12,13 +12,13 @@ add_trials(df, .n, .group = FALSE)
 \item{.n}{The number of trials.}
 
 \item{.group}{Whether to \code{group_by} the incoming parameters or all other columns.
-(default = TRUE).}
+(default = FALSE).}
 }
 \value{
 A \code{tibble} with the parameter space replicated \code{.n} times and a \code{.trial=1:.n} column.
 }
 \description{
-Title
+Add trials
 }
 \examples{
 library(tidyr)
