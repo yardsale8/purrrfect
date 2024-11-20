@@ -23,3 +23,6 @@ A list of outcomes
 \description{
 Random Samples and Permutations
 }
+\examples{
+take.one.sample(1:10, 3)
+}

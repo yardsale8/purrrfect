@@ -18,6 +18,6 @@
 #'    ~n,      ~p,
 #'    c(5,10), c(0.4, 0.6))
 parameters <-
-  function(..., group_by = TRUE) {
+  function(...) {
     tibble::tribble(...) %>% purrr::reduce(names(.), tidyr::unnest_longer, .init = .)
   }
