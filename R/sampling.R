@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' take.one.sample(1:10, 3)
 take.one.sample <-
   function(x, size, replace = FALSE, prob=NULL) {
     list(sample(x, size, replace, prob))
